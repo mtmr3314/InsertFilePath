@@ -18,12 +18,7 @@ class InsertFilePathFromSearchCommand(sublime_plugin.TextCommand):
 			path = os.path.relpath(path, self.currentdir)
 			insert_str = path.replace("\\", "/")
 
-
-		# Insert file path
-		edit = self.view.begin_edit()
-		for region in self.view.sel():
-			self.view.insert(edit, region.a, insert_str)
-		self.view.end_edit(edit)
+		self.view.run_command('insert', {'characters': insert_str})
 
 
 
@@ -90,11 +85,11 @@ class InsertFilePathFromSearchCommand(sublime_plugin.TextCommand):
 
 		# Error message 
 		option_list =["include_repository_dirs", "include_project_dirs", "include_current_dir", "include_open_files"]
-		tmp_num = 0
+		tmp_bool = False
 		for option_name in option_list :
-				tmp_num = tmp_num + self.SETTINGS.get(option_name)
-		if not tmp_num :
-			print "InsertFilePath : Error : All options are set false."
+				tmp_bool = tmp_bool + self.SETTINGS.get(option_name)
+		if not tmp_bool :
+			print("InsertFilePath : Error : All options are set false.")
 			sublime.status_message("InsertFilePath : Error : All options are set false.")			
 
 
@@ -134,7 +129,7 @@ class InsertFilePathFromSearchCommand(sublime_plugin.TextCommand):
 
 		# Error message 
 		if not selection :
-			print "InsertFilePath : Error : Target file was not found."
+			print("InsertFilePath : Error : Target file was not found.")
 			sublime.status_message("InsertFilePath : Error : Target file was not found.")			
 
 		# Show quick panel for search
