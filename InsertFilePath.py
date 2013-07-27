@@ -34,12 +34,30 @@ class InsertFilePathFromSearchCommand(sublime_plugin.TextCommand):
 
 	def dispose(self,  paths):
 
-		# Dispose overlapping or nonexistent elements
+		# Dispose overlapping, nonexistent, un-registered extensions or different drive elements
 		tmplist =[]
+		self.registered_extensions = []
+		if self.SETTINGS.get("target_extensions") :
+			self.registered_extensions = self.SETTINGS.get("target_extensions")
+
 		for tmpitem in paths :
 			if isinstance(tmpitem, list) :
 				if not tmpitem in tmplist :
-					tmplist.append(tmpitem)
+					if self.notation_method == "relative" :
+						if len(self.registered_extensions) > 0 :
+							if os.path.splitext(tmpitem[1])[1] in self.registered_extensions and tmpitem[1][0] == self.currentdir[0] : 
+								tmplist.append(tmpitem)
+						else :
+							if tmpitem[1][0] == self.currentdir[0] : 
+								tmplist.append(tmpitem)
+
+					elif self.notation_method == "absolute" :
+						if self.registered_extensions :
+							if os.path.splitext(tmpitem[1])[1] in self.registered_extensions : 
+								tmplist.append(tmpitem)
+						else :
+							tmplist.append(tmpitem)
+
 			else :
 				if os.path.exists(tmpitem) :
 					if not tmpitem in tmplist :
@@ -103,7 +121,7 @@ class InsertFilePathFromSearchCommand(sublime_plugin.TextCommand):
 		paths = self.dispose(paths)
 
 		# Make filename & path list
-		selection = NameAndPathList(self.currentdir, self.notation_method).make(paths)
+		selection = NameAndPathList().make(paths)
 
 		# Append OPEN FILES' names and paths into list
 		if self.SETTINGS.get("include_open_files") :
@@ -131,13 +149,8 @@ class NameAndPathList :
 	SETTINGS=sublime.load_settings('InsertFilePath.sublime-settings')
 
 
-	def __init__(self, currentdir, notation_method):
-		self.currentdir = currentdir
-		self.notation_method = notation_method
+	def __init__(self):
 		self.filenamepathlist = []
-		self.registered_extensions = []
-		if self.SETTINGS.get("target_extensions") :
-			self.registered_extensions = self.SETTINGS.get("target_extensions")
 
 
 	def make(self, dirpaths):
@@ -149,20 +162,7 @@ class NameAndPathList :
 			for name in subdirfilenames:
 				path = os.path.join(parentdirpath, name)
 				if os.path.isfile(path) :
-					if self.notation_method == "relative" :
-						if self.registered_extensions :
-							if os.path.splitext(path)[1] in self.registered_extensions and path[0] == self.currentdir[0] : 
-								self.filenamepathlist.append([name, path])
-						else :
-							if path[0] == self.currentdir[0] : 
-								self.filenamepathlist.append([name, path])
-
-					elif self.notation_method == "absolute" :
-						if self.registered_extensions :
-							if os.path.splitext(path)[1] in self.registered_extensions : 
-								self.filenamepathlist.append([name, path])
-						else :
-							self.filenamepathlist.append([name, path])
+					self.filenamepathlist.append([name, path])
 				elif os.path.isdir(path):
 					subdirpaths.append(path)
 
