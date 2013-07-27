@@ -17,7 +17,6 @@ class InsertFilePathFromSearchCommand(sublime_plugin.TextCommand):
 		elif self.notation_method == 'relative' :
 			path = os.path.relpath(path, self.currentdir)
 			insert_str = path.replace("\\", "/")
-		### Write the When the path is defferent drive path 
 
 
 		# Insert file path
