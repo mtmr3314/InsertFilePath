@@ -1,0 +1,8 @@
+{
+  "include_current_dir": true,
+  "include_project_dirs": false,
+  "include_open_files": true,
+  "include_repository_dirs": false,
+  "repository": ["C:/fuga/fuga01", "C:/hoge/hoge02"],
+  "target_extensions": [".eps", ".png", ".jpg"]
+}

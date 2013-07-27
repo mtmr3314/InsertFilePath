@@ -1,0 +1,10 @@
+[
+	//insert a relative file path from search
+	{ 
+		"keys": ["super+i", "r"], "command": "insert_file_path_from_search", "args":{"notation_method":"relative"} 
+	},
+	//insert an absolute file path from search
+	{ 
+		"keys": ["super+i", "a"], "command": "insert_file_path_from_search", "args":{"notation_method":"absolute"} 
+	}
+]
