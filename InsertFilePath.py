@@ -135,9 +135,9 @@ class NameAndPathList :
 		self.currentdir = currentdir
 		self.notation_method = notation_method
 		self.filenamepathlist = []
-		self.registared_extensions = []
+		self.registered_extensions = []
 		if self.SETTINGS.get("target_extensions") :
-			self.registared_extensions = self.SETTINGS.get("target_extensions")
+			self.registered_extensions = self.SETTINGS.get("target_extensions")
 
 
 	def make(self, dirpaths):
@@ -150,12 +150,19 @@ class NameAndPathList :
 				path = os.path.join(parentdirpath, name)
 				if os.path.isfile(path) :
 					if self.notation_method == "relative" :
-						if os.path.splitext(path)[1] in self.registared_extensions and path[0] == self.currentdir[0] : 
-							self.filenamepathlist.append([name, path])
-					elif self.notation_method == "absolute" :
-						if os.path.splitext(path)[1] in self.registared_extensions : 
-							self.filenamepathlist.append([name, path])
+						if self.registered_extensions :
+							if os.path.splitext(path)[1] in self.registered_extensions and path[0] == self.currentdir[0] : 
+								self.filenamepathlist.append([name, path])
+						else :
+							if path[0] == self.currentdir[0] : 
+								self.filenamepathlist.append([name, path])
 
+					elif self.notation_method == "absolute" :
+						if self.registered_extensions :
+							if os.path.splitext(path)[1] in self.registered_extensions : 
+								self.filenamepathlist.append([name, path])
+						else :
+							self.filenamepathlist.append([name, path])
 				elif os.path.isdir(path):
 					subdirpaths.append(path)
 
