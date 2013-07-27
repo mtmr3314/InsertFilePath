@@ -65,4 +65,5 @@ Checked on windows 7 only.
 version infomation
 ==================
 
-27.Jul.2013 : ver.1.0 release
+28.Jul.2013 : ver.1.1  Probably work on Sublime Text 3
+27.Jul.2013 : ver.1.0  Release
