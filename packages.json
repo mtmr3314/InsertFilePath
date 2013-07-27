@@ -1,0 +1,20 @@
+{
+	"schema_version": "1.2",
+	"packages": [
+		{
+			"name": "InsertFilePath",
+			"description": "Insert a absolute or relative file path at the cursor.",
+			"author": "mtmr3314",
+			"homepage": "https://github.com/mtmr3314/InsertFilePath",
+			"last_modified": "2013-07-27 01:29:14",
+			"platforms": {
+				"*": [
+					{
+						"version": "1.0.0",
+						"url": "https://nodeload.github.com/mtmr3314/InsertFilePath/zip/master"
+					}
+				]
+			}
+		}
+	]
+}
