@@ -26,6 +26,7 @@ Settings
 ========
 
 //---Contens of Settings----------------------//
+
 "include_current_dir": bool,
 "include_project_dirs": bool,
 "include_open_files": bool,
@@ -33,6 +34,7 @@ Settings
 
 "repository": ["path1", "path2", ... ],
 "target_extensions": [".ext1", ".ext2", ... ]
+
 //--------------------------------------------//
 
 
