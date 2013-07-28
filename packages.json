@@ -6,7 +6,7 @@
 			"description": "Insert a absolute or relative file path at the cursor.",
 			"author": "mtmr3314",
 			"homepage": "https://github.com/mtmr3314/InsertFilePath",
-			"last_modified": "2013-07-27 08:13:02",
+			"last_modified": "2013-07-28 08:21:10",
 			"platforms": {
 				"*": [
 					{
