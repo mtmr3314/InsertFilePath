@@ -39,12 +39,17 @@ class InsertFilePathFromSearchCommand(sublime_plugin.TextCommand):
 			if isinstance(tmpitem, list) :
 				if not tmpitem in tmplist :
 					if self.notation_method == "relative" :
-						if len(self.registered_extensions) > 0 :
-							if os.path.splitext(tmpitem[1])[1] in self.registered_extensions and tmpitem[1][0] == self.currentdir[0] : 
-								tmplist.append(tmpitem)
+						if self.view.file_name() :
+							if len(self.registered_extensions) > 0 :
+								if os.path.splitext(tmpitem[1])[1] in self.registered_extensions and tmpitem[1][0] == self.currentdir[0] : 
+									tmplist.append(tmpitem)
+							else :
+								if tmpitem[1][0] == self.currentdir[0] : 
+									tmplist.append(tmpitem)
 						else :
-							if tmpitem[1][0] == self.currentdir[0] : 
-								tmplist.append(tmpitem)
+							print("InsertFilePath : Error : Current directory don't exist.")
+							sublime.status_message("InsertFilePath : Error :  Current directory don't exist.")
+							break			
 
 					elif self.notation_method == "absolute" :
 						if self.registered_extensions :
@@ -68,7 +73,8 @@ class InsertFilePathFromSearchCommand(sublime_plugin.TextCommand):
 		# Make OPEN FILES' names and paths list
 		for view in sublime.active_window().views() :
 			sublime.active_window().focus_view(view)
-			openfiles.append([os.path.basename(view.file_name()), view.file_name()])
+			if view.file_name() :
+				openfiles.append([os.path.basename(view.file_name()), view.file_name()])
 
 		# Return to original active view
 		sublime.active_window().focus_view(active_view)
@@ -87,7 +93,7 @@ class InsertFilePathFromSearchCommand(sublime_plugin.TextCommand):
 		option_list =["include_repository_dirs", "include_project_dirs", "include_current_dir", "include_open_files"]
 		tmp_bool = False
 		for option_name in option_list :
-				tmp_bool = tmp_bool + self.SETTINGS.get(option_name)
+				tmp_bool = tmp_bool + bool(self.SETTINGS.get(option_name))
 		if not tmp_bool :
 			print("InsertFilePath : Error : All options are set false.")
 			sublime.status_message("InsertFilePath : Error : All options are set false.")			
