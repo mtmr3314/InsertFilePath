@@ -8,7 +8,6 @@ import sublime, sublime_plugin
 
 class InsertFilePathFromSearchCommand(sublime_plugin.TextCommand):
 	
-	SETTINGS=sublime.load_settings('InsertFilePath.sublime-settings')
 
 
 	def insert_path(self, path) :
@@ -83,6 +82,7 @@ class InsertFilePathFromSearchCommand(sublime_plugin.TextCommand):
     
 	def run(self, edit, notation_method):
 		import functools
+		self.SETTINGS=sublime.load_settings('InsertFilePath.sublime-settings')
 
 		
 		paths = []
@@ -93,6 +93,7 @@ class InsertFilePathFromSearchCommand(sublime_plugin.TextCommand):
 		option_list =["include_repository_dirs", "include_project_dirs", "include_current_dir", "include_open_files"]
 		tmp_bool = False
 		for option_name in option_list :
+				print(self.SETTINGS.get(option_name))
 				tmp_bool = tmp_bool + bool(self.SETTINGS.get(option_name))
 		if not tmp_bool :
 			print("InsertFilePath : Error : All options are set false.")
