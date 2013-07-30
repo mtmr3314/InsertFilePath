@@ -40,7 +40,8 @@ Settings
 By default, `include_current_dir` is only `true`.  
 `repsitory` setting is registering the paths as the above `repository` folders by setting folders' full-path in the list.  
 `target_extensions` setting is defined searchable file extensions. As an example, if setting is above, 
-files with `.ext1`, `.ext2` and other `...` extensions are only displayed on the quick panel.   
+files with `.ext1`, `.ext2` and other `...` extensions are only displayed on the quick panel. 
+By default, `.eps`, `.png` and `.jpg` is only set.  
 
 
 
